@@ -1,17 +1,17 @@
 const express = require('express')
 
-const { validation } = require('../../middlware')
+const { auth, validation } = require('../../middlware')
 const { joiShema, favoriteShema } = require('../../models/contact')
 const { contacts: ctrl } = require('../../controlers')
 
 
 const router = express.Router()
 
-router.get('/', ctrl.getAll)
+router.get('/', auth,  ctrl.getAll)
 
 router.get('/:contactId', ctrl.getById)
 
-router.post('/', validation(joiShema), ctrl.createContact)
+router.post('/', auth, validation(joiShema), ctrl.createContact)
 
 router.put('/:contactId', validation(joiShema), ctrl.changeById)
 
